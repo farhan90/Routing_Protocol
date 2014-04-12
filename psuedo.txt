@@ -1,0 +1,37 @@
+OnApplicationMessage:
+  if dest addr in table:
+    send message to outgoing interface index in table
+  else:
+    add application message to queue
+    broadcast rreq
+
+OnRREQMessage:
+  if message dest is my_ip:
+    send rrep to origin of rreq on iface message came in on
+  else if dest addr not in table:
+    inc hop_count by 1
+  else if in table:
+    send rrep to origin of rreq on iface in table
+    set message's should_rrep to 0
+
+  if ConsiderAddingToTable(RREQ):
+    flood RREQ to all ifaces that isnt incomming iface
+
+OnRREPMessage:
+  if message dest is my_ip:
+    add src ip -> incomming if to table
+    send out all messages in queue that have dest addr == src_ip
+  else if dest addr in table:
+    inc hop_count by 1
+    send rrep to destination on iface in table
+  else:
+    add rrep message to queue
+    broadcast rreq
+
+  ConsiderAddingToTable(RREP)
+
+ConsiderAddingToTable:
+  if src ip is not in table or lower hop_count to src ip than whats in table:
+    add src ip -> incomming if to table
+    return true
+  return false

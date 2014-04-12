@@ -1,0 +1,28 @@
+# Object files
+*.o
+*.ko
+*.gch
+
+# Libraries
+*.lib
+*.a
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+odr_mfielbig
+server_mfielbig
+client_mfielbig
+cleanup_vms
+deploy_app
+kill_apps
+rm_file
+setup_vms
+start_app
